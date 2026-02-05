@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 
 const POPUP_STORAGE_KEY = 'vipigo_popup_closed';
 const POPUP_DELAY_MS = 30000; // 30 seconds
-const POPUP_COOLDOWN_MS = 2 * 60 * 60 * 1000; // 2 hours
+const POPUP_COOLDOWN_MS = 5 * 60 * 1000; // 5 minutes
 
 export function usePopupTimer() {
   const [showPopup, setShowPopup] = useState(false);
@@ -19,13 +19,13 @@ export function usePopupTimer() {
         
         return () => clearTimeout(timer);
       } else {
-        // Check if 2 hours have passed
+        // Check if 5 minutes have passed
         const timestamp = parseInt(closedTimestamp, 10);
         const now = Date.now();
         const timePassed = now - timestamp;
         
         if (timePassed >= POPUP_COOLDOWN_MS) {
-          // 2 hours passed, show again after 30 seconds
+          // 5 minutes passed, show again after 30 seconds
           const timer = setTimeout(() => {
             setShowPopup(true);
           }, POPUP_DELAY_MS);
